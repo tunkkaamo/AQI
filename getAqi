@@ -1,0 +1,42 @@
+#!/bin/bash
+#c8d98e9ab7ec2ee985cf388960c88d0f9c8c6153 --this is our token for Air Quality Open Data Platform
+wget -i aqiUrl -O ./inow.json
+#results are now in file inow.json
+#below we extract date-time and the corresponding aqi
+aqiText=$(cut -d, -f3 inow.json)
+aqi=${aqiText:6:3}
+dateText=$(cut -d, -f5 inow.json)
+aqiDate=${dateText:6:18}
+pm25Text=$(cut -d 'v' -f3 inow.json | cut -d '}' -f 1)
+aqiPM25=${pm25Text:2:3}
+pm10Text=$(cut -d 'v' -f4 inow.json | cut -d '}' -f 1)
+aqiPM10=${pm10Text:2:3}
+o3Text=$(cut -d 'v' -f5 inow.json | cut -d '}' -f 1)
+aqiO3=${o3Text:2:2}
+no2Text=$(cut -d 'v' -f6 inow.json | cut -d '}' -f 1)
+aqiNO2=${no2Text:2:2}
+so2Text=$(cut -d 'v' -f7 inow.json | cut -d '}' -f 1)
+aqiSO2=${so2Text:2:2}
+coText=$(cut -d 'v' -f8 inow.json | cut -d '}' -f 1)
+aqiCO=${coText:2:2}
+temperatureText=$(cut -d 'v' -f9 inow.json | cut -d '}' -f 1)
+aqiTemp=${temperatureText:2:2}
+dewText=$(cut -d 'v' -f10 inow.json | cut -d '}' -f 1)
+aqiDew=${dewText:2:2}
+airPressureText=$(cut -d 'v' -f11 inow.json | cut -d '}' -f 1)
+aqiPressure=${airPressureText:2:4}
+humidityText=$(cut -d 'v' -f12 inow.json | cut -d '}' -f 1)
+aqiHumidity=${humidityText:2:2}
+windText=$(cut -d 'v' -f13 inow.json | cut -d '}' -f 1 )
+aqiWind=${windText:2:2}
+clear
+printf "Values driven %s , timezone is GMT+8\n" "$aqiDate"
+printf  "AQI at the moment in Shanghai is %s\n" "$aqi"
+
+#now lets strore the results into a file.
+if [ ! -f ./aqiStudy.csv ]; then
+    touch ./aqiStudy.csv
+fi
+printf "Datetime\t %s\t timezone\t GMT+8\t AQI Shanghai\t %s\t PM2.5\t %s\t PM10\t %s\t O3\t  %s\t NO2\t  %s\t SO2\t  %s\t CO\t  %s\t Temperature\t  %s\t Dew\t  %s\t Air pressure is\t %s\t Humidity\t %s\t Wind\t %s\t\n" "$aqiDate" "$aqi" "$aqiPM25" "$aqiPM10" "$aqiO3" "$aqiNO2" "$aqiSO2" "$aqiCO" "$aqiTemp" "$aqiDew" "$aqiPressure" "$aqiHumidity" "$aqiWind" >> aqiStudy.csv
+#clean up
+rm inow.json*
