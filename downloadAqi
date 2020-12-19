@@ -1,0 +1,3 @@
+#!/bin/bash
+
+scp katsomo@s1.specitonline.net:./aqiStudy.csv /cygdrive/c/Users/nsje/OneDrive/programming/bash/AQI/aqiStudyShanghai.csv

@@ -40,3 +40,4 @@ fi
 printf "Datetime\t %s\t timezone\t GMT+8\t AQI Shanghai\t %s\t PM2.5\t %s\t PM10\t %s\t O3\t  %s\t NO2\t  %s\t SO2\t  %s\t CO\t  %s\t Temperature\t  %s\t Dew\t  %s\t Air pressure is\t %s\t Humidity\t %s\t Wind\t %s\t\n" "$aqiDate" "$aqi" "$aqiPM25" "$aqiPM10" "$aqiO3" "$aqiNO2" "$aqiSO2" "$aqiCO" "$aqiTemp" "$aqiDew" "$aqiPressure" "$aqiHumidity" "$aqiWind" >> aqiStudy.csv
 #clean up
 rm inow.json*
+
